@@ -9,4 +9,4 @@ https://morf77.pythonanywhere.com/ar - Custom aspect ratio calculation
 
 Known Issues:
 
-Arcade cores are untested.  Cores that aren't Common Intermediate Format compliant may give wrong results.
+Arcade cores are untested.  Cores that aren't Common Intermediate Format compliant may give wrong AR results.
