@@ -6,3 +6,7 @@ Online version of these tools can be found at:
 https://morf77.pythonanywhere.com/vm - Modeline to video_mode conversion<br>
 
 https://morf77.pythonanywhere.com/ar - Custom aspect ratio calculation
+
+Known Issues:
+
+Arcade cores are untested.  Cores that aren't Common Intermediate Format compliant may give wrong results.
