@@ -34,24 +34,48 @@ TITLE_SAFE = 0.05
 LINES_NTSC = 240.0
 LINES_PAL = 288.0
 
+amiga = False
 
 pixel_clock = float,input("Pixel clock: ")
 visible_pixels = float,input("Visible pixels: ")
 visible_lines = float,input("Visible lines: ")
-video_type  = input("Video type (NTSC/PAL):")
+video_type  = input("Video type (1=NTSC/2=PAL):")
+amigacalc = input("Amiga AR calculation (Yes/No (No=default)?")
+if 'y' in amigacalc.lower():
+  amigares = input("Amiga resolution mode (1=SHRES ECS/AGA, 2=HRES)")
+  amiga = True
+  LINES_NTSC = 200.0
+  LINES_PAL = 256.0
+  if "1" in amigares:
+     v_samplerate = 28.375160
+     resmode = "SHRES ECS/AGA"
+  else:
+     v_samplerate = 14.187580
+     resmode = "HRES"
+else:
+  v_samplerate = 13.5
+  LINES_NTSC = 240.0
+  LINES_PAL = 288.0
+
 clockstr = str(pixel_clock[1])
 pixelstr = str(visible_pixels[1])
 linestr = str(visible_lines[1])
-print("Calculating for visible area of "+pixelstr+" x "+linestr+" at "+clockstr+" mhz pixel clock")
 
-if video_type == "NTSC":
-  pix_per_line = round(float(pixel_clock[1]) * 704.0 / 13.5)
-  video_lines = LINES_NTSC
+if amiga:
+  print("Calculating for visible area of "+pixelstr+" x "+linestr+" at "+clockstr+" mhz pixel clock for Amiga "+resmode)  
 else:
-  pix_per_line = round(float(pixel_clock[1]) * 702.0 / 13.5)
+  print("Calculating for visible area of "+pixelstr+" x "+linestr+" at "+clockstr+" mhz pixel clock")
+
+if "1" in video_type: ##NTSC
+  video_typetext = "NTSC"
+  pix_per_line = round(float(pixel_clock[1]) * 704.0 / v_samplerate)
+  video_lines = LINES_NTSC
+else:              ##PAL
+  video_typetext= "PAL"
+  pix_per_line = round(float(pixel_clock[1]) * 702.0 / v_samplerate)
   video_lines = LINES_PAL
 
-print("Dots per line: %f, Lines: %f Standard: %s\n" % (pix_per_line, video_lines,video_type))
+print("Dots per line: %f, Lines: %f Standard: %s\n" % (pix_per_line, video_lines,video_typetext))
 
 horizontal_aspect = 4.0 * float(visible_pixels[1]) / pix_per_line
 vertical_aspect   = 3.0 * float(visible_lines[1]) / video_lines
