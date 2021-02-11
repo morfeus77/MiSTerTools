@@ -1,0 +1,165 @@
+<link href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+<script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.0/js/bootstrap.min.js"></script>
+<script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
+
+{% extends "base.html" %}
+
+{% block app_content %}
+    <h1>Mister Aspect Ratio Calculator</h1>
+    <form action="" method="post" novalidate>
+        {{ form.hidden_tag() }}
+        <p>
+            {{ form.pixelclock.label }}<br>
+            {{ form.pixelclock(size=20) }}
+        </p>
+        <p>
+            {{ form.pixels.label }}<br>
+            {{ form.pixels(size=20) }}
+        </p>
+        <p>
+            {{ form.lines.label }}<br>
+            {{ form.lines(size=20) }}
+        </p>
+
+        <p>
+            {{ form.customres.label }}<br>
+            {{ form.customres (onClick="myFunction2()")}}
+            <div id="divcustomres" style="display:none">
+            {{ form.customvertres.label }}<br>
+            {{ form.customvertres }}
+            </div>
+        </p>
+
+        <p>
+            {{ form.videotype.label }}<br>
+            {{ form.videotype }}
+        </p>
+        <p>
+            {{ form.amiga.label }}<br>
+            {{ form.amiga (onClick="myFunction()") }}
+            <div id="divamigares" style="display:none">
+            {{ form.amigares.label }}<br>
+            {{ form.amigares }}
+            </div>
+        </p>
+
+
+        {% if dotresult %}
+        <p>
+            {{ form.results.label }}<br>
+        </p>
+        <p class="font-weight-bold">
+            <input type="text" id="dotresult" class="form-control" value="{{ dotresult }}">
+        </p>
+        {% endif %}
+        {% if arresult %}
+        <p class="font-weight-bold">
+            <input type="text" id="dotresult" class="form-control" value="{{ arresult }}">
+        </p>
+        {% endif %}
+        {% if squareresult %}
+        <p class="font-weight-bold">
+            <input type="text" id="dotresult" class="form-control" value="{{ squareresult }}">
+        </p>
+        {% endif %}
+
+
+        {% if ar480 %}
+        <p>
+            {{ form.ar480.label }}<br>
+        </p>
+        <p class="font-weight-bold">
+            <input type="text" id="ini480" class="form-control" value="{{ ini480 }}">
+        </p>
+        {% endif %}
+
+        {% if ar720 %}
+        <p>
+            {{ form.ar720.label }}<br>
+        </p>
+        <p class="font-weight-bold">
+            <input type="text" id="ini720" class="form-control" value="{{ ini720 }}">
+        </p>
+        {% endif %}
+        {% if ar1080 %}
+        <p>
+            {{ form.ar1080.label }}<br>
+        </p>
+        <p class="font-weight-bold">
+            <input type="text" id="ini1080" class="form-control" value="{{ ini1080 }}">
+        </p>
+        {% endif %}
+        {% if ar1200 %}
+        <p>
+            {{ form.ar1200.label }}<br>
+        </p>
+        <p class="font-weight-bold">
+            <input type="text" id="ini1200" class="form-control" value="{{ ini1200 }}">
+        </p>
+        {% endif %}
+        {% if ar1440 %}
+        <p>
+            {{ form.ar1440.label }}<br>
+        </p>
+        <p class="font-weight-bold">
+            <input type="text" id="ini1440" class="form-control" value="{{ ini1440 }}">
+        </p>
+        {% endif %}
+        {% if ar1536 %}
+        <p>
+            {{ form.ar1536.label }}<br>
+        </p>
+        <p class="font-weight-bold">
+            <input type="text" id="ini1536" class="form-control" value="{{ ini1536 }}">
+        </p>
+        {% endif %}
+
+        {% if arcustom %}
+        <p>
+            {{ form.arcustom.label }}<br>
+        </p>
+        <p class="font-weight-bold">
+            <input type="text" id="arcustom" class="form-control" value="{{ arcustom }}">
+        </p>
+        <p class="font-weight-bold">
+            <input type="text" id="customini" class="form-control" value="{{ customini }}">
+        </p>
+        {% endif %}
+
+        <p>{{ form.submitar() }}</p>
+
+    </form>
+<script>
+
+function myFunction() {
+  // Get the checkbox
+  var checkBox = document.getElementById("amiga");
+  // Get the output text
+  var text = document.getElementById("divamigares");
+
+  // If the checkbox is checked, display the output text
+  if (checkBox.checked == true){
+    text.style.display = "block";
+  } else {
+    text.style.display = "none";
+  }
+
+}
+
+function myFunction2() {
+  // Get the checkbox
+  var checkBox2 = document.getElementById("customres");
+  // Get the output text
+  var text2 = document.getElementById("divcustomres");
+
+  // If the checkbox is checked, display the output text
+  if (checkBox2.checked == true){
+    text2.style.display = "block";
+  } else {
+    text2.style.display = "none";
+  }
+
+}
+</script>
+
+{% endblock %}
