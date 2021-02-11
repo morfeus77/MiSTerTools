@@ -35,7 +35,7 @@ LINES_NTSC = 240.0
 LINES_PAL = 288.0
 
 amiga = False
-res = [480, 720, 1080, 1200, 1440, 1576]
+res = [480, 720, 1080, 1200, 1440, 1536]
 
 pixel_clock = float,input("Pixel clock: ")
 visible_pixels = float,input("Visible pixels: ")
@@ -143,7 +143,23 @@ for i in range(0,rescount):
            blankperiod = 1.188
         reqclock = float(scaledwidth) * float(integer_lines) * float(framerate) * float(blankperiod)
 
-        print("Integer aspect ratio for %dp (%dx and %dx): (%d:%d) minimum required pixel clock: %f mhz" % (res[i],(v_multi + nearest_h),v_multi, xres, yres, reqclock/1000000))
+        print("Integer aspect ratio for %dp minimum required pixel clock: %f mhz" % (res[i], reqclock/1000000))
+
+        widertext = ''
+         
+        if int(res[i])==1440:
+          if int(visible_pixels[1])*(v_multi + nearest_h) > 1920:
+             widertext = ", wider than 1920"
+        else:
+          if int(res[i])==1200:
+             if int(visible_pixels[1])*(v_multi + nearest_h) > 1600:
+                 widertext = ", wider than 1600"
+          else:
+            if int(res[i])==1536:
+               if int(visible_pixels[1])*(v_multi + nearest_h) > 2048:
+                  widertext = ", wider than 2048"           
+
+        print("custom_aspect_ratio_1=%d:%d      ; %d:%d @ %.3f, %d:%d PAR (%d:%d%s)" % ( xres, yres, int(visible_pixels[1]),int(visible_lines[1]), float(pixel_clock[1]), (v_multi + nearest_h), v_multi, int(visible_pixels[1])*(v_multi + nearest_h), int(visible_lines[1])*v_multi,widertext))
 
 
 
