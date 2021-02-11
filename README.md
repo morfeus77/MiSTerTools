@@ -3,9 +3,9 @@ Small collection of python scripts intended for use with the MiSTer project.  Cu
 
 Online version of these tools can be found at:
 
-https://morf77.pythonanywhere.com/vm - Modeline to video_mode conversion<br>
+https://morf77.pythonanywhere.com/vm - *Modeline to video_mode conversion*<br>
 
-https://morf77.pythonanywhere.com/ar - Custom aspect ratio calculation
+https://morf77.pythonanywhere.com/ar - *Custom aspect ratio calculation*
 
 
 The webapp included in the Flask folder requires Flask-WTF and bootstrap.
