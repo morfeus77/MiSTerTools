@@ -15,6 +15,6 @@ https://flask-wtf.readthedocs.io/en/stable/
 https://getbootstrap.com/
 
 
-** Kown Issues ** 
+**Kown Issues** 
 
 Arcade cores are untested.  Cores that aren't Common Intermediate Format compliant may give wrong AR results.
