@@ -10,3 +10,8 @@ https://morf77.pythonanywhere.com/ar - Custom aspect ratio calculation
 Known Issues:
 
 Arcade cores are untested.  Cores that aren't Common Intermediate Format compliant may give wrong AR results.
+
+The webapp included in the Flask folder requires Flask-WTF and bootstrap.
+
+https://flask-wtf.readthedocs.io/en/stable/
+https://getbootstrap.com/
