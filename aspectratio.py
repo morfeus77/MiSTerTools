@@ -35,10 +35,18 @@ LINES_NTSC = 240.0
 LINES_PAL = 288.0
 
 amiga = False
+res = [480, 720, 1080, 1200, 1440, 1576]
 
 pixel_clock = float,input("Pixel clock: ")
 visible_pixels = float,input("Visible pixels: ")
 visible_lines = float,input("Visible lines: ")
+customres = input("Calculate for a custom resolution? (Yes/No (No=default)?")
+if 'y' in customres.lower():
+   customvertres = input("Custom Vertical Resolution: ")
+   res.append(int(customvertres))
+
+rescount = len(res)
+
 video_type  = input("Video type (1=NTSC/2=PAL):")
 amigacalc = input("Amiga AR calculation (Yes/No (No=default)?")
 if 'y' in amigacalc.lower():
@@ -103,10 +111,7 @@ yres = ratiofraction.denominator
 
 print("Square aspect ratio: (%d:%d)" % (xres, yres))
 
-res = [480, 720, 1080, 1200, 1440, 1576]
-
-
-for i in range(0,6):
+for i in range(0,rescount):
         arx = 0
         ary = 0
         v_multi = int(int(res[i]) / int(visible_lines[1]))
