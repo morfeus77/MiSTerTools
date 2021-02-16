@@ -7,6 +7,7 @@ https://morf77.pythonanywhere.com/vm - *Modeline to video_mode conversion*<br>
 
 https://morf77.pythonanywhere.com/ar - *Custom aspect ratio calculation*
 
+Custom aspect ratio calculatior is based on code by Rysha.
 
 The webapp included in the Flask folder requires Flask-WTF and bootstrap.
 
