@@ -123,6 +123,17 @@ for i in range(0,rescount):
 
         if integer_lines > 0:
           fractratio = integer_pixels / integer_lines
+          ratiodeviation = (fractratio / proper_ratio) * 100
+          if ratiodeviation > 100:
+             dardeviationtext = "+%f %% of DAR" % (ratiodeviation-100) 
+          else:
+            if ratiodeviation < 100:
+               dardeviationtext = "-%f %% of DAR" % (100 - ratiodeviation)
+            else:
+               if rationdeviation == 100:
+                  dardeviationtext = "identical to DAR"
+               else:
+                  dardeviationtext = ""
           ratiofraction = Fraction.from_float(fractratio).limit_denominator()
           xres = ratiofraction.numerator
           yres = ratiofraction.denominator
@@ -143,7 +154,7 @@ for i in range(0,rescount):
            blankperiod = 1.188
         reqclock = float(scaledwidth) * float(integer_lines) * float(framerate) * float(blankperiod)
 
-        print("Integer aspect ratio for %dp minimum required pixel clock: %f mhz" % (res[i], reqclock/1000000))
+        print("Integer aspect ratio for %dp %s required pixel clock: %f mhz" % (res[i], dardeviationtext, reqclock/1000000))
 
         widertext = ''
          
