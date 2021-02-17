@@ -130,7 +130,7 @@ for i in range(0,rescount):
             if ratiodeviation < 100:
                dardeviationtext = "-%f %% of DAR" % (100 - ratiodeviation)
             else:
-               if rationdeviation == 100:
+               if ratiodeviation == 100:
                   dardeviationtext = "identical to DAR"
                else:
                   dardeviationtext = ""
