@@ -1,3 +1,8 @@
+# Instructions:
+# Copy your _Arcade folder including the _alternatives subdirectory to your pc.
+# Place this python script inside the _Arcade folder and run with "python3 mralist.py"
+# CSV files are created inside the _Arcade folder
+
 import os
 directory = os.getcwd()
 setnamedict = {}
