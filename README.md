@@ -21,3 +21,7 @@ https://getbootstrap.com/
 **Known Issues** 
 
 Arcade cores are untested.  Cores that aren't Common Intermediate Format compliant may give wrong AR results.
+
+**To Do**
+
+Make the mralist python script run from MiSTeR itself.
