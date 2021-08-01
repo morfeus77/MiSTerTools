@@ -25,3 +25,4 @@ Arcade cores are untested.  Cores that aren't Common Intermediate Format complia
 **To Do**
 
 Make the mralist python script run from MiSTer itself.
+Tate option for Aspect Ratio calculator
