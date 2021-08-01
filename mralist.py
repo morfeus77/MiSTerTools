@@ -6,6 +6,7 @@ parsed = 0
 errors = 0
 setname = ""
 rbfname = ""
+rbfaltname = ""
 zipname = ""
     
 for subdir, dirs, files in os.walk(directory):
@@ -28,7 +29,22 @@ for subdir, dirs, files in os.walk(directory):
               rbfname = rbf.lstrip()
               rbfname = rbfname.rstrip("\n")
               #print("RBF: ",rbfname)
-          
+
+          if "<rbf alt=" in line:
+              array = line.split("<rbf alt=")
+              for word in array:
+                if "</rbf>" in word:
+                  rbfarray = word.split(">")
+                  for rbfs in rbfarray:
+                      if "</rbf" in rbfs:
+                        rbfname = rbfs.replace("</rbf",'')
+                        #print("RBF: ",rbfname)
+                  array2 = word.split("\">")
+                  for word2 in array2:
+                    rbfaltname = word2.replace("\"",'')
+                    #print("RBFalt: ",rbfaltname)
+                    break
+ 
           if "zip=" in line:
              array = line.split("zip=\"")
              for word in array:
@@ -50,6 +66,10 @@ for subdir, dirs, files in os.walk(directory):
             if not setnamedict.get(setname):
                    setnamedict.setdefault(setname, [])
                    setnamedict[setname].append(rbfname)
+                   if rbfaltname:
+                      setnamedict[setname].append(rbfaltname)
+                   else:
+                      setnamedict[setname].append("")       
                    parsed += 1
                    if zipname:
                      setnamedict[setname].append(zipname)
@@ -63,6 +83,7 @@ for subdir, dirs, files in os.walk(directory):
      setname = ""
      rbfname = ""
      zipname = ""
+     rbfaltname = ""
 #print(setnamedict)
 
 
@@ -75,11 +96,13 @@ if errors > 0:
 if parsed > 0:
   print("Writing file mra_parsed_list.csv ...")
   csvfile = open('mra_parsed_list.csv', mode='wt', encoding='utf-8')
+  csvline = ("Setname;RBF;Alt RBF;Zip\n")
+  csvfile.write(csvline)
   for setnames, values in setnamedict.items():
-     if 1 < len(values):
-       csvline = (setnames +";"+values[0]+";"+values[1]+"\n") 
+     if 2 < len(values):
+       csvline = (setnames +";"+values[0]+";"+values[1]+";"+values[2]+"\n") 
      else:
-       csvline = (setnames+";"+values[0]+"\n")  
+       csvline = (setnames+";"+values[0]+";"+values[1]+"\n")  
      csvfile.write(csvline)
   csvfile.close
 
@@ -92,5 +115,4 @@ if errors > 0:
        csvline2 = (mranames+";"+values+"\n")  
        csvfile2.write(csvline2)
   csvfile2.close
-
 
