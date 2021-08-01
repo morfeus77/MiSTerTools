@@ -1,4 +1,7 @@
 #!/usr/bin/python3
+
+#This script parses the MRA _Arcade folder, collects the RBF, Setname and zip file info and checks for MRA's with missing info
+
 import os
 directory = "/media/fat/_Arcade"
 setnamedict = {}
@@ -11,7 +14,9 @@ rbfaltname = ""
 zipname = ""
 
 print("Parsing MRA's....  please wait.")
-    
+
+#Inspect all MRA's in _Arcade folder excluding the _Organized subdirectory
+
 for subdir, dirs, files in os.walk(directory):
   if not "_Organized" in os.fsdecode(subdir):
     for file in files:
@@ -96,6 +101,8 @@ if parsed > 0:
 
 if errors > 0:
   print("Found %i MRA files with missing information." % (errors))
+
+#Write output files to disk
 
 if parsed > 0:
   print("Writing file mra_parsed_list.csv ...")
