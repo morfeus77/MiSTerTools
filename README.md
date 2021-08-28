@@ -23,7 +23,7 @@ Arcade cores are untested.  Cores that aren't Common Intermediate Format complia
 
 ## iniswitcher.sh
 
-![alt text](https://github.com/morfeus77/MiSTerTools/blob/main/image.jpg?raw=true)
+![alt text](https://github.com/morfeus77/MiSTerTools/blob/main/iniswitcher.png?raw=true)
 
 
 **iniswitcher.sh** allows you to switch between your custom ini files eg 5x.ini, 6x.ini, 15khz.ini, 31khz.ini
