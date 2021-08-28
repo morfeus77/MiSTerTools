@@ -30,6 +30,4 @@ This script does not include ini files - you need to provide these yourself (pla
 
 ![alt text](https://github.com/morfeus77/MiSTerTools/blob/main/iniswitcher.png?raw=true)
 
-ini files should be place in in /media/fat
-
 **do not edit your MiSTer.ini file itself when you use this script, instead edit your custom ini files**
