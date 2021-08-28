@@ -42,9 +42,16 @@ class Menu(object):
                 itemlist = item[0].split("/")
                 msg = "%d. %s" % (index, itemlist[-1])
                 self.window.addstr(1 + index, 1, msg, mode)
+
             height, width = self.window.getmaxyx()
             statusbarstr = "Press ENTER to use ini as MiSTer.ini (main)"
-            self.window.addstr(height-3, 1, statusbarstr)
+
+            if os.path.isfile('/media/fat/.activeprofile'):
+               with open('/media/fat/.activeprofile', "r") as activeprofiles:
+                     activeprofile = activeprofiles.readline()
+            else:
+               activeprofile = "Not Set"
+            self.window.addstr(height-3, 1, "%s - Active profile: %s" % (statusbarstr,activeprofile))
 
             key = self.window.getch()
             if key in [curses.KEY_ENTER, ord("\n")]:
@@ -52,6 +59,7 @@ class Menu(object):
                     break
                 else:
                     activateini(self.items[self.position][0])
+                    self.window.clear()
                     self.window.addstr(3 + index, 1, "Copied %s to /media/fat/MiSTer.ini" % self.items[self.position][0], mode)
             else:
                 if key == curses.KEY_UP:
@@ -92,6 +100,8 @@ def main():
 
 def activateini(inifilename):
     shutil.copyfile(inifilename, '/media/fat/MiSTer.ini')
+    with open('/media/fat/.activeprofile', "w") as activeprofile:
+         activeprofile.write(inifilename)
 
 if __name__ == "__main__":
     main()
