@@ -18,6 +18,7 @@ https://flask-wtf.readthedocs.io/en/stable/
 https://getbootstrap.com/
 
 iniswitcher.sh allows you to switch between your custom ini files eg 5x.ini, 6x.ini, 15khz.ini, 31khz.ini
+
 ini files should be place in in /media/fat
 do not edit your MiSTer.ini file itself when you use this script, instead edit your custom ini files
 
