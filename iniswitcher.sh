@@ -86,7 +86,7 @@ class IniProfileSwitcher(object):
          if inifile.lower() not in defaultinilist:
             main_menu_items.append((str(inifile),curses.beep))
 
-      main_menu = Menu(main_menu_items, self.screen)
+      main_menu = Menu(sorted(main_menu_items), self.screen)
       main_menu.display()
       
 
