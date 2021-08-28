@@ -1,5 +1,5 @@
 # MiSTerTools
-Small collection of python scripts intended for use with the MiSTer project.  Custom aspect ratio calculation, modeline to video_mode conversion, video_mode to modeline conversion and a script to parse MRA files.
+Small collection of python scripts intended for use with the MiSTer project.  Custom aspect ratio calculation, modeline to video_mode conversion, video_mode to modeline conversion, ini profile switcher and a script to parse MRA files (data collection).
 
 Online version of these tools can be found at:
 
