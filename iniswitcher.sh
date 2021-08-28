@@ -77,7 +77,7 @@ class IniProfileSwitcher(object):
   def __init__(self, stdscreen):
       self.screen = stdscreen
       curses.curs_set(0)
-      defaultinilist = ["/media/fat/mister.ini", "/media/fat/mister_alt_1.ini"]
+      defaultinilist = ["/media/fat/mister.ini", "/media/fat/mister_alt_1.ini", "/media/fat/mister_alt_2.ini"]
       global iniFilenamesList
       iniFilenamesList = glob.glob('/media/fat/*.ini')
       main_menu_items = []
