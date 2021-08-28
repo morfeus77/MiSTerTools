@@ -26,6 +26,8 @@ Arcade cores are untested.  Cores that aren't Common Intermediate Format complia
 
 **iniswitcher.sh** allows you to switch between your custom ini files eg 5x.ini, 6x.ini, 15khz.ini, 31khz.ini
 
+This script does not include ini files - you need to provide these yourself (place them in /media/fat)
+
 ![alt text](https://github.com/morfeus77/MiSTerTools/blob/main/iniswitcher.png?raw=true)
 
 ini files should be place in in /media/fat
