@@ -174,7 +174,7 @@ def activateini(inifilename):
     confirmed = throwwarning("activate")
     if confirmed:
        shutil.copyfile(inifilename, '/media/fat/MiSTer.ini')
-       with open('/media/fat/.activeprofile', "w") as activeprofile:
+       with open('/media/fat/.activeprofile', "w", encoding="utf-8") as activeprofile:
             activeprofile.write(inifilename)
        return(True)
     else:
