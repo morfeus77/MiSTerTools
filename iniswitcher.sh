@@ -76,7 +76,7 @@ class Menu(object):
         while True:
             height, width = self.window.getmaxyx()
             for y, line in enumerate(ascii_art.splitlines(), 2):
-                self.window.addstr(y+5, 35, line)
+                self.window.addstr(y+3, 62, line)
             self.window.refresh()
             curses.doupdate()
 
@@ -107,7 +107,7 @@ class Menu(object):
                 else:
                     activateini(self.items[self.position][0])
                     self.window.clear()
-                    self.window.addstr(3 + index, 1, "Copied %s to /media/fat/MiSTer.ini" % self.items[self.position][0], mode)
+                    self.window.addstr(3 + index, 1, "%s is now active..." % self.items[self.position][0], mode)
             else:
                 if key == curses.KEY_UP:
                    self.navigate(-1)
