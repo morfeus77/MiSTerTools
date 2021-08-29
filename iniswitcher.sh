@@ -105,7 +105,7 @@ class Menu(object):
                   self.window.clear()                
                   self.window.addstr(4 + index, 1, "%s removed" % self.items[self.position][0], mode)
                else:
-                  self.window.addstr(4 + index, 1, "Operation cancelled", mode)
+                  self.window.addstr(4 + index, 1, "Delete operation cancelled", mode)
             if (key == 27):
                self.window.clear()
 
@@ -115,9 +115,10 @@ class Menu(object):
                 else:
                     if self.position == len(self.items) - 2:
                       backupfilename, overwrite  = createbackup()
+                      backupname = backupfilename.split("/") 
                       if overwrite:
                         self.window.clear()
-                        self.window.addstr(4 + index, 1, "MiSTer.ini backed up as %s" % backupfilename, mode)
+                        self.window.addstr(4 + index, 1, "MiSTer.ini backed up as %s" % backupname[-1], mode)
                         if ((backupfilename, curses.beep)) not in self.items:
                            self.items.append((backupfilename, curses.beep))
                            self.items = sorted(self.items)
