@@ -94,16 +94,19 @@ class Menu(object):
                 self.window.addstr(1 + index, 1, msg, mode)
 
             statusbarstr = "ENTER to apply ini, D to delete an ini"
-
-            self.window.addstr(height-3, 1, "%s - Active profile: %s" % (statusbarstr,activeprofile),curses.A_REVERSE)
+            if "/" in activeprofile:
+              activeprofilename = activeprofile.split("/")
+            else: 
+              activeprofilename = [activeprofile]
+            self.window.addstr(height-3, 1, "%s - Active profile: %s" % (statusbarstr,activeprofile[-1]),curses.A_REVERSE)
 
             key = self.window.getch()
             if ((key == 100) or (key == 68)) and self.position < len(self.items) - 2:
                confirmed = deleteini(self.items[self.position][0])
                if confirmed:
-                  self.items.remove(self.items[self.position])
-                  self.window.clear()                
+                  self.window.clear()
                   self.window.addstr(4 + index, 1, "%s removed" % self.items[self.position][0], mode)
+                  self.items.remove(self.items[self.position])
                else:
                   self.window.addstr(4 + index, 1, "Delete operation cancelled", mode)
             if (key == 27):
@@ -122,7 +125,6 @@ class Menu(object):
                         if ((backupfilename, curses.beep)) not in self.items:
                            self.items.append((backupfilename, curses.beep))
                            self.items = sorted(self.items)
-                           self.window.clear()
                       else:
                         self.window.clear()
                         self.window.addstr(4 + index, 1, "Backup cancelled", mode) 
