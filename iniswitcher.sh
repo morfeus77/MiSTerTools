@@ -98,7 +98,7 @@ class Menu(object):
               activeprofilename = activeprofile.split("/")
             else: 
               activeprofilename = [activeprofile]
-            self.window.addstr(height-3, 1, "%s - Active profile: %s" % (statusbarstr,activeprofile[-1]),curses.A_REVERSE)
+            self.window.addstr(height-3, 1, "%s - Active profile: %s" % (statusbarstr,activeprofilename[-1]),curses.A_REVERSE)
 
             key = self.window.getch()
             if ((key == 100) or (key == 68)) and self.position < len(self.items) - 2:
