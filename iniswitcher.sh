@@ -30,10 +30,56 @@ class Menu(object):
         self.panel.top()
         self.panel.show()
         self.window.clear()
+        curses.start_color()
+        curses.init_pair(1, curses.COLOR_CYAN, curses.COLOR_BLACK)
+        curses.init_pair(2, curses.COLOR_RED, curses.COLOR_BLACK)
+        curses.init_pair(3, curses.COLOR_BLACK, curses.COLOR_WHITE)
+
+        ascii_art =  "                -=.                      :+-\n\
+              .#@@@+                    +@@@*\n\
+              %@*-%@#                  *@%-%@*\n\
+             #@#.=:#@%.               #@#-=:%@+\n\
+            *@%.#@%.*@%.            .%@*:%@*-@@:\n\
+           =@@:*@+@@.*@@************%@*:@%+@+=@%.\n\
+         =%@@= ##**#= *@@@@@@@@@@@@@@* +#**#* #@@*.\n\
+        #@@=.                                 .=#@@=\n\
+       +@%.                                      -@@:\n\
+       %@+                                        *@#\n\
+       %@=                                        +@#\n\
+       %@=                                        +@#\n\
+       %@=                                        +@#       \n\
+       %@=                %@:  -@#                +@#       \n\
+       %@=:**************#@@%++%@@****++++*******.=@#       \n\
+       %@=+@#****@@@@@@***+%@@@@%**#*@@@@@%****#@==@#       \n\
+      :@@=+@:    :@@@@-    #@=+@*    =@@@@.    -@-=@%:      \n\
+    .#@@#::@#     .==.    :@@##@@.    :=-.     %@.:#@@*     \n\
+   .@@#:   +@+           +@@%##%@@*.          *@=   :%@%    \n\
+   #@*      +@%-       -%#+%%**%%=*@=       =@@=      #@#   \n\
+  :@@:       :#@@#*++*%@%-:-+##+-:-#@%*++*%@@*:       :@@:  \n\
+  -@%.         .=*#%#@@%++::-**-::++%@@#%#*=.         .%@-  \n\
+  :@@.              -*:@@%##%%%%##%@@:+=              .@@:  \n\
+   %@*           ...%.++:+%@#**#@%=:=* %: .           *@%   \n\
+   .@@#:           .=.%.  .:=++=:. . #:=:           .#@@.   \n\
+    .#@@#:           :+ ...      ... =-           :#@@#.    \n\
+      :@@=                  ....                  +@%:      \n\
+       %@=                                        +@#       \n\
+       %@=                                        +@#       \n\
+     -%@@=                                        =@@#:     \n\
+    -@@+:                   .::.                   :*@@-    \n\
+    %@+                  .*@@@@@@+.                  +@%    \n\
+    %@+                 -@@#=--=%@@:                 -@@    \n\
+    =@@-..           . :@@=      +@@:             ..-%@+    \n\
+     +@@@@@@@@@@@@@@@@@@@#        %@@@@@@@@@@@@@@@@@@@+     \n\
+      .=+++++++++++++++++:        -+++++++++++++++++=.   "
+
 
         while True:
+            height, width = self.window.getmaxyx()
+            for y, line in enumerate(ascii_art.splitlines(), 2):
+                self.window.addstr(y+5, 35, line)
             self.window.refresh()
             curses.doupdate()
+
             for index, item in enumerate(self.items):
                 if index == self.position:
                     mode = curses.A_REVERSE
@@ -43,7 +89,6 @@ class Menu(object):
                 msg = "%d. %s" % (index, itemlist[-1])
                 self.window.addstr(1 + index, 1, msg, mode)
 
-            height, width = self.window.getmaxyx()
             statusbarstr = "Press ENTER to use ini as MiSTer.ini (main)"
 
             if os.path.isfile('/media/fat/.activeprofile'):
@@ -51,7 +96,9 @@ class Menu(object):
                      activeprofile = activeprofiles.readline()
             else:
                activeprofile = "Not Set"
+            self.window.attron(curses.color_pair(3))
             self.window.addstr(height-3, 1, "%s - Active profile: %s" % (statusbarstr,activeprofile))
+            self.window.attroff(curses.color_pair(3))
 
             key = self.window.getch()
             if key in [curses.KEY_ENTER, ord("\n")]:
@@ -88,6 +135,7 @@ class IniProfileSwitcher(object):
 
       main_menu = Menu(sorted(main_menu_items), self.screen)
       main_menu.display()
+
       
 
 def main():
@@ -105,4 +153,3 @@ def activateini(inifilename):
 
 if __name__ == "__main__":
     main()
-
