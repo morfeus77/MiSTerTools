@@ -211,11 +211,14 @@ def throwwarning(type=None):
 
     if type=="backup":
        textintro = "Warning this backup already exists"
+       action = "overwrite"
     elif type=="activate":
        textintro = "Warning this will overwrite your MiSTer.ini"
+       action = "overwrite"
     elif type=="delete":
-       textintro = "Are you sure you want to delete this ini?"      
-    actions = "\n\nPress ENTER to overwrite. ESC to cancel."
+       textintro = "Are you sure you want to delete this ini?" 
+       action = "delete"     
+    actions = "\n\nPress ENTER to %s. ESC to cancel." % action
     text = textintro + actions
 
     box1.box()
