@@ -218,7 +218,6 @@ def throwwarning(type=None):
     box2.addstr(1,0,text,curses.color_pair(2))
     key = screen.getch()
 
-    #download ini-file, delete existing ini, move ini to /media/fat
     if key in [curses.KEY_ENTER, ord("\n")]:
        screen.clear()
        return(True)
