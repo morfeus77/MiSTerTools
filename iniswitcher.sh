@@ -130,7 +130,8 @@ class Menu(object):
                       activated = activateini(self.items[self.position][0])
                       if activated:
                          self.window.clear()
-                         self.window.addstr(3 + index, 1, "%s is now active..." % self.items[self.position][0], mode)
+                         ininame = self.items[self.position][0].split("/")
+                         self.window.addstr(3 + index, 1, "%s is now active..." % ininame[-1], mode)
                       else:
                          self.window.addstr(3 + index, 1, "Activation of ini cancelled")
             else:
