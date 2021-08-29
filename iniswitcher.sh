@@ -88,42 +88,50 @@ class Menu(object):
                     mode = curses.A_NORMAL
                 itemlist = item[0].split("/")
                 if item[0] == activeprofile:
-                  self.window.attron(curses.color_pair(1))
                   msg = "%d. %s (currently active)" % (index, itemlist[-1])
-                  self.window.attroff(curses.color_pair(1))
                 else:
                   msg = "%d. %s" % (index, itemlist[-1])
                 self.window.addstr(1 + index, 1, msg, mode)
 
             statusbarstr = "ENTER to apply ini, D to delete an ini"
 
-            self.window.attron(curses.color_pair(3))
-            self.window.addstr(height-3, 1, "%s - Active profile: %s" % (statusbarstr,activeprofile))
-            self.window.attroff(curses.color_pair(3))
+            self.window.addstr(height-3, 1, "%s - Active profile: %s" % (statusbarstr,activeprofile),curses.A_REVERSE)
 
             key = self.window.getch()
             if ((key == 100) or (key == 68)) and self.position < len(self.items) - 2:
-               deleteini(self.items[self.position][0])
-               self.items.remove(self.items[self.position])
-               self.window.clear()                
-               self.window.addstr(4 + index, 1, "%s removed" % self.items[self.position][0], mode)
+               confirmed = deleteini(self.items[self.position][0])
+               if confirmed:
+                  self.items.remove(self.items[self.position])
+                  self.window.clear()                
+                  self.window.addstr(4 + index, 1, "%s removed" % self.items[self.position][0], mode)
+               else:
+                  self.window.addstr(4 + index, 1, "Operation cancelled", mode)
+            if (key == 27):
+               self.window.clear()
 
             if key in [curses.KEY_ENTER, ord("\n")]:
                 if self.position == len(self.items) - 1:
                     break
                 else:
                     if self.position == len(self.items) - 2:
-                      backupfilename = createbackup()
-                      self.window.clear()
-                      self.window.addstr(4 + index, 1, "MiSTer.ini backed up as %s" % backupfilename, mode)
-                      if ((backupfilename, curses.beep)) not in self.items:
-                         self.items.append((backupfilename, curses.beep))
-                         self.items = sorted(self.items)
-                         self.window.clear()
+                      backupfilename, overwrite  = createbackup()
+                      if overwrite:
+                        self.window.clear()
+                        self.window.addstr(4 + index, 1, "MiSTer.ini backed up as %s" % backupfilename, mode)
+                        if ((backupfilename, curses.beep)) not in self.items:
+                           self.items.append((backupfilename, curses.beep))
+                           self.items = sorted(self.items)
+                           self.window.clear()
+                      else:
+                        self.window.clear()
+                        self.window.addstr(4 + index, 1, "Backup cancelled", mode) 
                     else:
-                      activateini(self.items[self.position][0])
-                      self.window.clear()
-                      self.window.addstr(3 + index, 1, "%s is now active..." % self.items[self.position][0], mode)
+                      activated = activateini(self.items[self.position][0])
+                      if activated:
+                         self.window.clear()
+                         self.window.addstr(3 + index, 1, "%s is now active..." % self.items[self.position][0], mode)
+                      else:
+                         self.window.addstr(3 + index, 1, "Activation of ini cancelled")
             else:
                 if key == curses.KEY_UP:
                    self.navigate(-1)
@@ -161,19 +169,71 @@ def main():
     os.system('reboot')
 
 def activateini(inifilename):
-    shutil.copyfile(inifilename, '/media/fat/MiSTer.ini')
-    with open('/media/fat/.activeprofile', "w") as activeprofile:
-         activeprofile.write(inifilename)
+    confirmed = throwwarning("activate")
+    if confirmed:
+       shutil.copyfile(inifilename, '/media/fat/MiSTer.ini')
+       with open('/media/fat/.activeprofile', "w") as activeprofile:
+            activeprofile.write(inifilename)
+       return(True)
+    else:
+       return(False)
 
 def createbackup():
     dateTimeObj = datetime.now()
     date = dateTimeObj.date()
     backupname = '/media/fat/MiSTerBackup%s.ini' % date
-    shutil.copyfile('/media/fat/MiSTer.ini',backupname)
-    return(backupname)
+    if not os.path.isfile(backupname):
+       shutil.copyfile('/media/fat/MiSTer.ini',backupname)
+       return(backupname,True)
+    else:
+       overwritten = throwwarning("backup")
+       if overwritten:
+          shutil.copyfile('/media/fat/MiSTer.ini',backupname)
+          return(backupname,True)
+       else:
+          return(backupname,False)
+
+def throwwarning(type=None):
+    screen = curses.initscr()
+    screen.immedok(True)
+
+    screen.border(0)
+
+    box1 = curses.newwin(7, 50, 1, 50)
+    box2 = curses.newwin(4, 45 ,2, 52)
+
+    box1.immedok(True)
+    box2.immedok(True)
+
+    if type=="backup":
+       textintro = "Warning this backup already exists"
+    elif type=="activate":
+       textintro = "Warning this will overwrite your MiSTer.ini"
+    elif type=="delete":
+       textintro = "Are you sure you want to delete this ini?"      
+    actions = "\n\nPress ENTER to overwrite. ESC to cancel."
+    text = textintro + actions
+
+    box1.box()
+    box2.addstr(1,0,text,curses.color_pair(2))
+    key = screen.getch()
+
+    #download ini-file, delete existing ini, move ini to /media/fat
+    if key in [curses.KEY_ENTER, ord("\n")]:
+       screen.clear()
+       return(True)
+    else:
+       if key == 27:
+         screen.clear()
+         return(False)
 
 def deleteini(inifilename):
-    os.remove(inifilename)
+    confirmed = throwwarning("delete")
+    if confirmed:
+       os.remove(inifilename)
+       return(True)
+    else:
+       return(False)
 
 if __name__ == "__main__":
     main()
