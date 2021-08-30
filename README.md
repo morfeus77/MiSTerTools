@@ -31,3 +31,5 @@ This script does not include ini files - you need to provide these yourself (pla
 ![alt text](https://github.com/morfeus77/MiSTerTools/blob/main/iniswitcher.png?raw=true)
 
 **do not edit your MiSTer.ini file itself when you use this script, instead edit your custom ini files**
+
+Be warned this script overwrites your MiSTer.ini file.  Use the backup function if you're not sure what you're doing.
