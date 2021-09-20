@@ -70,8 +70,9 @@ class Menu(object):
 
         while True:
             height, width = self.window.getmaxyx()
-            for y, line in enumerate(ascii_art.splitlines(), 2):
-                self.window.addstr(y+8, 52, line)
+            if height > 40 and width > 100:
+               for y, line in enumerate(ascii_art.splitlines(), 2):
+                   self.window.addstr(y+(height-35),width-69, line)
             self.window.refresh()
             curses.doupdate()
 
@@ -101,6 +102,7 @@ class Menu(object):
             self.window.addstr(height-3, 1, "%s - Active profile: %s" % (statusbarstr,activeprofilename[-1]),curses.A_REVERSE)
 
             key = self.window.getch()
+
             if ((key == 100) or (key == 68)) and self.position < len(self.items) - 2:
                confirmed = deleteini(self.items[self.position][0])
                if confirmed:
@@ -200,11 +202,14 @@ def createbackup():
 def throwwarning(type=None):
     screen = curses.initscr()
     screen.immedok(True)
+    height, width = screen.getmaxyx()
+    start_y = int((height // 2) - 2)
+    start_x =  int((width // 2) - 2)
 
     screen.border(0)
 
-    box1 = curses.newwin(7, 50, 1, 50)
-    box2 = curses.newwin(4, 45 ,2, 52)
+    box1 = curses.newwin(7, 48, start_y-4, start_x-28)
+    box2 = curses.newwin(5, 45 ,start_y-3, start_x-26)
 
     box1.immedok(True)
     box2.immedok(True)
@@ -229,8 +234,8 @@ def throwwarning(type=None):
        screen.clear()
        return(True)
     else:
-       if key == 27:
-         screen.clear()
+       screen.clear()
+       if key == 27:         
          return(False)
 
 def deleteini(inifilename):
